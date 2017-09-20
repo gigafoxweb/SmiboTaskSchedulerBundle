@@ -1,0 +1,26 @@
+{
+    "name": "smibo/task-scheduler-bundle",
+    "type": "symfony-bundle",
+    "description": "Simple Symfony bundle for task management",
+    "keywords": ["symfony", "task", "scheduler", "task manager", "task scheduler"],
+    "version": "0.0.1",
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "Ihor Smirnov",
+        "email": "gigafoxweb@gmail.com"
+      }
+    ],
+    "require": {
+      "php": "^7.0",
+      "symfony/dependency-injection": "~2.3 || ~3.0",
+      "symfony/config":               "~2.3 || ~3.0",
+      "symfony/yaml":                 "~2.3 || ~3.0",
+      "symfony/console":              "~2.3 || ~3.0"
+    },
+    "autoload": {
+      "psr-4": {
+        "Smibo\\": "src/"
+      }
+    }
+}
