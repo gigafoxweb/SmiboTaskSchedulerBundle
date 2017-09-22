@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "description": "Simple Symfony bundle for task management",
     "keywords": ["symfony", "task", "scheduler", "task manager", "task scheduler"],
-    "version": "0.0.1",
+    "version": "0.0.2",
     "license": "MIT",
     "authors": [
       {

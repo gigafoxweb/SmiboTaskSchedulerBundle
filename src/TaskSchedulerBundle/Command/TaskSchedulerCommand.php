@@ -5,11 +5,11 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class TaskManagerCommand extends ContainerAwareCommand
+class TaskSchedulerCommand extends ContainerAwareCommand
 {
     public function configure()
     {
-        $this->setName("task-scheduler:run")->setDescription('Runs the task manager.');
+        $this->setName("task-scheduler:run")->setDescription('Runs task scheduler.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
