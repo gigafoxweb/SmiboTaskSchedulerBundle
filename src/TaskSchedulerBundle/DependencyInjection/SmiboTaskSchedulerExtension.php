@@ -1,17 +1,20 @@
 <?php
-
 namespace Smibo\TaskSchedulerBundle\DependencyInjection;
 
 use DateInterval;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use function var_dump;
 
 class SmiboTaskSchedulerExtension extends Extension
 {
+    const EVENT_DISPATCHER_SERVICE_ID = 'event_dispatcher';
+
     /**
      * @var array
      */

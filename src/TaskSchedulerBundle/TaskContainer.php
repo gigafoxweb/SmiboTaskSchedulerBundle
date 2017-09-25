@@ -1,6 +1,7 @@
 <?php
-namespace Smibo\TaskSchedulerBundle;
+declare(strict_types=1);
 
+namespace Smibo\TaskSchedulerBundle;
 
 class TaskContainer
 {

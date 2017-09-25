@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace Smibo\TaskSchedulerBundle\DependencyInjection;
 
+use Smibo\TaskSchedulerBundle\SmiboTaskSchedulerBundle;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
-
 
 class Configuration implements ConfigurationInterface
 {
@@ -15,7 +16,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('smibo_task_scheduler');
+        $rootNode = $treeBuilder->root(SmiboTaskSchedulerBundle::NAME);
 
         $this->addDefaults($rootNode);
         $this->addTasks($rootNode);

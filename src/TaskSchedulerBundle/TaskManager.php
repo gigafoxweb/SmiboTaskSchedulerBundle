@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace Smibo\TaskSchedulerBundle;
 
-
-use Smibo\TaskSchedulerBundle\Exceptions\TaskException;
+use Smibo\TaskSchedulerBundle\Exceptions\TaskSchedulerException;
 
 class TaskManager
 {
@@ -16,12 +15,12 @@ class TaskManager
     /**
      * @param string $id
      * @return bool
-     * @throws TaskException
+     * @throws TaskSchedulerException
      */
     public function checkTask(string $id): bool
     {
         if (!isset($this->tasks[$id])) {
-            throw new TaskException("Task {$id} does not exist.");
+            throw new TaskSchedulerException("Task {$id} does not exist.");
         }
         return (
             $this->tasks[$id]->getChecker() === null ||
@@ -31,12 +30,12 @@ class TaskManager
 
     /**
      * @param $id
-     * @throws TaskException
+     * @throws TaskSchedulerException
      */
     public function runTask(string $id): void
     {
         if (!isset($this->tasks[$id])) {
-            throw new TaskException("Task {$id} does not exist.");
+            throw new TaskSchedulerException("Task {$id} does not exist.");
         }
         $this->tasks[$id]->getHandler()->handle($this->tasks[$id]->getTask());
     }

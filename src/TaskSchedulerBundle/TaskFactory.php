@@ -3,8 +3,7 @@ declare(strict_types=1);
 
 namespace Smibo\TaskSchedulerBundle;
 
-
-use Smibo\TaskSchedulerBundle\Exceptions\TaskException;
+use Smibo\TaskSchedulerBundle\Exceptions\TaskCreationException;
 
 class TaskFactory
 {
@@ -31,13 +30,13 @@ class TaskFactory
 
     /**
      * @return TaskInterface
-     * @throws TaskException
+     * @throws TaskCreationException
      */
     public function createTask(): TaskInterface
     {
         $reflection = new \ReflectionClass($this->class);
         if (!$reflection->implementsInterface(TaskInterface::class)) {
-            throw new TaskException('Task must implement ' . TaskInterface::class . ' interface');
+            throw new TaskCreationException('Task must implement ' . TaskInterface::class . ' interface');
         }
         /* @var $task TaskInterface */
         $task = $reflection->newInstanceArgs($this->arguments);

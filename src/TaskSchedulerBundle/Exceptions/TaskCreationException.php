@@ -1,8 +1,4 @@
 <?php
 namespace Smibo\TaskSchedulerBundle\Exceptions;
 
-
-class TaskException extends \Exception
-{
-
-}
+class TaskCreationException extends \Exception {}
