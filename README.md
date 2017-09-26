@@ -132,6 +132,8 @@ class TaskDataStorage implements ContainerAwareInterface, StorageInterface
 services:
     task_storage:
         class: AppBundle\TaskDataStorage
+        calls:
+            - [setContainer, ['@service_container']]
 ```
 
 ### Handler
@@ -139,6 +141,7 @@ Service implements Smibo\Bundle\TaskSchedulerBundle\HandlerInterface.
 Processes the task.
 
 ####Example
+
 ```php
 <?php
 declare(strict_types=1);
@@ -168,6 +171,7 @@ Service implements Smibo\Bundle\TaskSchedulerBundle\CheckerInterface.
  Checks if the tasks are ready and can be passed to the Handler service. Optional stage, since as a rule it is enough to set Interval.
 
 ####Example
+
 ```php
 <?php
 declare(strict_types=1);
@@ -196,9 +200,17 @@ servicese:
 ### Interval
 Just [DateInterval](http://php.net/manual/ru/class.dateinterval.php) value.
 
+### Events
+Also you can simple use [Events and Event Listeners](http://symfony.com/doc/current/event_dispatcher.html) with the next events:
+   * AfterTaskSchedulerHandleTaskEvent::NAME ('after.task.scheduler.handle.task')
+   * AfterTaskSchedulerRunEvent::NAME ('after.task.scheduler.run')
+   * BeforeTaskSchedulerHandleTaskEvent::NAME ('before.task.scheduler.handle.task')
+   * BeforeTaskSchedulerRunEvent::NAME ('before.task.scheduler.run')
+   * TaskSchedulerExceptionEvent::NAME ('task.scheduler.exception')
 
 ## Using
+
 ```
 ./bin/console task-scheduler:run
 ```
-Good idea will be to crate a unix daemon and control it by some supervisor like [supervisord](http://supervisord.org)  
+Good idea will be to create a [unix daemon](https://en.wikipedia.org/wiki/Daemon_(computing)) and control it by some supervisor like [supervisord](http://supervisord.org)  
