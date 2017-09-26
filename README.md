@@ -106,6 +106,11 @@ class TaskDataStorage implements ContainerAwareInterface, StorageInterface
 {
     use ContainerAwareTrait;
 
+    /**
+     * @param string $id
+     * @return \DateTime
+     * @throws \Exception
+     */
     public function getTaskLastRunTime(string $id): \DateTime
     {
         $em = $this->container->get('doctrine')->getManager();
@@ -115,6 +120,11 @@ class TaskDataStorage implements ContainerAwareInterface, StorageInterface
         return $task->getLastRunDate();
     }
 
+    /**
+     * @param string $id
+     * @param \DateTime $time
+     * @throws \Exception
+     */
     public function saveTaskLastRunTime(string $id, \DateTime $time): void
     {
         $em = $this->container->get('doctrine')->getManager();
@@ -138,9 +148,9 @@ services:
 
 ### Handler
 Service implements Smibo\Bundle\TaskSchedulerBundle\HandlerInterface. 
-Processes the task.
+Handle the task and process it.
 
-####Example
+#### Example
 
 ```php
 <?php
@@ -153,6 +163,9 @@ use Smibo\Bundle\TaskSchedulerBundle\TaskInterface;
 
 class DefaultTaskHandler implements HandlerInterface
 {
+    /**
+     * @param TaskInterface $task
+     */
     function handle(TaskInterface $task): void
     {
         var_dump($task);
@@ -161,16 +174,16 @@ class DefaultTaskHandler implements HandlerInterface
 ```
 
 ```yaml
-servicese:
+services:
     default_task_handler:
-        class: AppBundle\TaskHandlers\DefaultDefaultTaskHandler
+        class: AppBundle\TaskHandlers\DefaultTaskHandler
 ```
 
 ### Checker
 Service implements Smibo\Bundle\TaskSchedulerBundle\CheckerInterface. 
  Checks if the tasks are ready and can be passed to the Handler service. Optional stage, since as a rule it is enough to set Interval.
 
-####Example
+#### Example
 
 ```php
 <?php
@@ -183,6 +196,10 @@ use Smibo\Bundle\TaskSchedulerBundle\TaskInterface;
 
 class DefaultTaskChecker implements CheckerInterface
 {
+    /**
+     * @param TaskInterface $task
+     * @return bool
+     */
     function check(TaskInterface $task): bool
     {
         //because it is just example :)
@@ -192,7 +209,7 @@ class DefaultTaskChecker implements CheckerInterface
 ```
 
 ```yaml
-servicese:
+services:
     default_task_checker:
         class: AppBundle\TaskHandlers\DefaultChecker
 ```
