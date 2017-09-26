@@ -14,10 +14,10 @@ composer require smibo/task-scheduler-bundle
 
 ```yaml
 smibo_task_scheduler:
-    storage: db_task_time_storage
-    default_handler: default_handler
-    default_checker: default_checker
-    default_interval: PT30M
+    storage: task_storage #required
+    default_handler: default_handler #required
+    default_checker: default_checker #optional
+    default_interval: PT30M #required
     tasks:
         import:
             class: AppBundle\Task\Import #required
