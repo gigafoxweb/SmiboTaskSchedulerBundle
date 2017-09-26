@@ -14,11 +14,12 @@ class TaskSchedulerExceptionEvent extends SchedulerEvent
     protected $exception;
 
     /**
-     * TaskSchedulerException constructor.
+     * TaskSchedulerExceptionEvent constructor.
+     * @param TaskSchedulerException $exception
      */
-    public function __construct(TaskSchedulerException $e)
+    public function __construct(TaskSchedulerException $exception)
     {
-        $this->exception = $e;
+        $this->exception = $exception;
     }
 
     /**
