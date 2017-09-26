@@ -9,5 +9,5 @@ interface HandlerInterface
      * @param TaskInterface $task
      * @return void
      */
-    function handle(TaskInterface $task) : void;
+    function handle(TaskInterface $task): void;
 }

@@ -53,7 +53,7 @@ class TaskManager
      * @param $id
      * @return null|TaskContainer
      */
-    public function getTask(string $id): TaskContainer
+    public function getTask(string $id): ?TaskContainer
     {
         return isset($this->tasks[$id]) ? $this->tasks[$id] : null;
     }

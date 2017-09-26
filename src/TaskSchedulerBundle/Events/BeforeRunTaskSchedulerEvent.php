@@ -26,7 +26,7 @@ class BeforeRunTaskSchedulerEvent extends SchedulerEvent
     /**
      * @return TaskScheduler
      */
-    public function getTaskScheduler()
+    public function getTaskScheduler(): TaskScheduler
     {
         return $this->taskScheduler;
     }

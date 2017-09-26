@@ -119,7 +119,7 @@ class TaskScheduler
      * @param $id
      * @return null|TaskInterface
      */
-    public function getTask(string $id): TaskInterface
+    public function getTask(string $id): ?TaskInterface
     {
         $taskContainer = $this->taskManager->getTask($id);
         return ($taskContainer instanceof TaskContainer) ? $taskContainer->getTask() : null;
@@ -142,7 +142,7 @@ class TaskScheduler
      *
      * @return TaskScheduler
      */
-    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher)
+    public function setEventDispatcher(EventDispatcherInterface $eventDispatcher): self
     {
         $this->eventDispatcher = $eventDispatcher;
 
@@ -151,7 +151,7 @@ class TaskScheduler
 
     /**
      * @param string $eventName
-     * @param SchedulerEvent  $event
+     * @param SchedulerEvent $event
      */
     protected function dispatchEvent($eventName, SchedulerEvent $event)
     {
@@ -164,9 +164,9 @@ class TaskScheduler
     }
 
     /**
-     * @return EventDispatcherInterface
+     * @return EventDispatcherInterface|null
      */
-    public function getEventDispatcher()
+    public function getEventDispatcher(): ?EventDispatcherInterface
     {
         return $this->eventDispatcher;
     }

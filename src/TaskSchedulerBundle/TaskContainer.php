@@ -36,7 +36,7 @@ class TaskContainer
     /**
      * @return TaskInterface
      */
-    public function getTask()
+    public function getTask(): TaskInterface
     {
         return $this->task;
     }
@@ -44,15 +44,15 @@ class TaskContainer
     /**
      * @return HandlerInterface
      */
-    public function getHandler()
+    public function getHandler(): HandlerInterface
     {
         return $this->handler;
     }
 
     /**
-     * @return CheckerInterface
+     * @return CheckerInterface|null
      */
-    public function getChecker()
+    public function getChecker(): ?CheckerInterface
     {
         return $this->checker;
     }

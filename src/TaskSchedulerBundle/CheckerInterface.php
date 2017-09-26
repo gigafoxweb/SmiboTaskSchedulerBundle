@@ -9,5 +9,5 @@ interface CheckerInterface
      * @param TaskInterface $task
      * @return bool
      */
-    function check(TaskInterface $task) : bool;
+    function check(TaskInterface $task): bool;
 }
