@@ -1,8 +1,8 @@
 <?php
-namespace Smibo\TaskSchedulerBundle\DependencyInjection\Compiler;
+namespace Smibo\Bundle\TaskSchedulerBundle\DependencyInjection\Compiler;
 
 
-use Smibo\TaskSchedulerBundle\SmiboTaskSchedulerBundle;
+use Smibo\Bundle\TaskSchedulerBundle\SmiboTaskSchedulerBundle;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;

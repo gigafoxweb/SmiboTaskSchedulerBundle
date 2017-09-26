@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
 
-namespace Smibo\TaskSchedulerBundle;
+namespace Smibo\Bundle\TaskSchedulerBundle;
 
 interface TaskInterface {}

@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Smibo\TaskSchedulerBundle\Events;
+namespace Smibo\Bundle\TaskSchedulerBundle\Events;
 
-use Smibo\TaskSchedulerBundle\TaskInterface;
+use Smibo\Bundle\TaskSchedulerBundle\TaskInterface;
 
-class BeforeHandleTaskEvent extends SchedulerEvent
+class BeforeTaskSchedulerHandleTaskEvent extends SchedulerEvent
 {
     /**
      * string
      */
-    const NAME = 'before.handle.task';
+    const NAME = 'before.task.scheduler.handle.task';
 
     /**
      * @var string

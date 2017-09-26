@@ -1,7 +1,7 @@
 <?php
-namespace Smibo\TaskSchedulerBundle;
+namespace Smibo\Bundle\TaskSchedulerBundle;
 
-use Smibo\TaskSchedulerBundle\DependencyInjection\Compiler\InjectEventDispatcherPass;
+use Smibo\Bundle\TaskSchedulerBundle\DependencyInjection\Compiler\InjectEventDispatcherPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

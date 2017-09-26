@@ -1,14 +1,14 @@
 <?php
-namespace Smibo\TaskSchedulerBundle\Events;
+namespace Smibo\Bundle\TaskSchedulerBundle\Events;
 
-use Smibo\TaskSchedulerBundle\TaskScheduler;
+use Smibo\Bundle\TaskSchedulerBundle\TaskScheduler;
 
-class BeforeRunTaskSchedulerEvent extends SchedulerEvent
+class AfterTaskSchedulerRunEvent extends SchedulerEvent
 {
     /**
      * string
      */
-    const NAME = 'before.run.task.scheduler';
+    const NAME = 'after.task.scheduler.run';
 
     /**
      * @var TaskScheduler

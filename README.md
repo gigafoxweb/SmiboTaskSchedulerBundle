@@ -33,18 +33,18 @@ smibo_task_scheduler:
                 to: anotherbody@mail.com
 ```
 ### Task
-Just simple custom [Value Object](https://en.wikipedia.org/wiki/Value_object) which does not implement any task-cheduler-interface 
+Just simple custom [Value Object](https://en.wikipedia.org/wiki/Value_object) which does not implement any task scheduler interface. 
 
 ### Storage
-Service implements Smibo\TaskSchedulerBundle\StorageInterface. 
+Service implements Smibo\Bundle\TaskSchedulerBundle\StorageInterface. 
 Allows to check when was the task's last run by the Handler.
 
 ### Handler
-Service implements Smibo\TaskSchedulerBundle\HandlerInterface. 
+Service implements Smibo\Bundle\TaskSchedulerBundle\HandlerInterface. 
 Processes the task.
 
 ### Checker
-Service implements Smibo\TaskSchedulerBundle\CheckerInterface. 
+Service implements Smibo\Bundle\TaskSchedulerBundle\CheckerInterface. 
  Checks if the tasks are ready and can be passed to the Handler service. Optional stage, since as a rule it is enough to set Interval.
 
 ### Interval

@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Smibo\TaskSchedulerBundle;
+namespace Smibo\Bundle\TaskSchedulerBundle;
 
-use Smibo\TaskSchedulerBundle\Exceptions\TaskSchedulerException;
+use Smibo\Bundle\TaskSchedulerBundle\Exceptions\TaskSchedulerException;
 
 class TaskManager
 {
@@ -44,7 +44,7 @@ class TaskManager
      * @param $id
      * @param TaskContainer $taskContainer
      */
-    public function addTask($id, TaskContainer $taskContainer): void
+    public function setTask($id, TaskContainer $taskContainer): void
     {
         $this->tasks[$id] = $taskContainer;
     }

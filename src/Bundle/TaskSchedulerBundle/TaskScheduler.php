@@ -1,15 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Smibo\TaskSchedulerBundle;
+namespace Smibo\Bundle\TaskSchedulerBundle;
 
 use DateInterval;
 use DateTime;
-use Smibo\TaskSchedulerBundle\Events\AfterHandleTaskEvent;
-use Smibo\TaskSchedulerBundle\Events\BeforeHandleTaskEvent;
-use Smibo\TaskSchedulerBundle\Events\BeforeRunTaskSchedulerEvent;
-use Smibo\TaskSchedulerBundle\Events\SchedulerEvent;
+use Smibo\Bundle\TaskSchedulerBundle\Events\AfterTaskSchedulerHandleTaskEvent;
+use Smibo\Bundle\TaskSchedulerBundle\Events\AfterTaskSchedulerRunEvent;
+use Smibo\Bundle\TaskSchedulerBundle\Events\BeforeTaskSchedulerHandleTaskEvent;
+use Smibo\Bundle\TaskSchedulerBundle\Events\BeforeTaskSchedulerRunEvent;
+use Smibo\Bundle\TaskSchedulerBundle\Events\SchedulerEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use function var_dump;
 
 class TaskScheduler
 {
@@ -44,7 +46,7 @@ class TaskScheduler
      */
     public function run(): void
     {
-        $this->dispatchEvent(BeforeRunTaskSchedulerEvent::NAME, new BeforeRunTaskSchedulerEvent($this));
+        $this->dispatchEvent(BeforeTaskSchedulerRunEvent::NAME, new BeforeTaskSchedulerRunEvent($this));
         foreach ($this->taskManager->getTasks() as $id => $task) {
             if ($task instanceof TaskSchedulerContainer) {
                 $now = new DateTime();
@@ -61,6 +63,7 @@ class TaskScheduler
                 }
             }
         }
+        $this->dispatchEvent(AfterTaskSchedulerRunEvent::NAME, new AfterTaskSchedulerRunEvent($this));
     }
 
     /**
@@ -69,9 +72,9 @@ class TaskScheduler
      */
     protected function runTask(string $id, TaskContainer $task)
     {
-        $this->dispatchEvent(BeforeHandleTaskEvent::NAME, new BeforeHandleTaskEvent($id, $task->getTask()));
+        $this->dispatchEvent(BeforeTaskSchedulerHandleTaskEvent::NAME, new BeforeTaskSchedulerHandleTaskEvent($id, $task->getTask()));
         $this->taskManager->runTask($id);
-        $this->dispatchEvent(AfterHandleTaskEvent::NAME, new AfterHandleTaskEvent($id, $task->getTask()));
+        $this->dispatchEvent(AfterTaskSchedulerHandleTaskEvent::NAME, new AfterTaskSchedulerHandleTaskEvent($id, $task->getTask()));
     }
 
     /**
@@ -81,14 +84,14 @@ class TaskScheduler
      * @param HandlerInterface|null $handler
      * @param CheckerInterface|null $checker
      */
-    public function addTask(
+    public function setTask(
         string $id,
         TaskInterface $task,
         DateInterval $interval,
         HandlerInterface $handler,
         CheckerInterface $checker = null
     ): void {
-        $this->taskManager->addTask($id, new TaskSchedulerContainer($task, $interval, $handler, $checker));
+        $this->taskManager->setTask($id, new TaskSchedulerContainer($task, $interval, $handler, $checker));
     }
 
     /**

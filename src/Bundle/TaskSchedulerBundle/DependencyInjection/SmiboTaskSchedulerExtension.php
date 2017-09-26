@@ -1,5 +1,5 @@
 <?php
-namespace Smibo\TaskSchedulerBundle\DependencyInjection;
+namespace Smibo\Bundle\TaskSchedulerBundle\DependencyInjection;
 
 use DateInterval;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -54,7 +54,7 @@ class SmiboTaskSchedulerExtension extends Extension
     protected function loadTasks()
     {
         foreach ($this->config['tasks'] as $id => $task) {
-            $this->container->getDefinition('smibo_task_scheduler')->addMethodCall('addTask', [
+            $this->container->getDefinition('smibo_task_scheduler')->addMethodCall('setTask', [
                 $id,
                 $this->createTaskFactoryDefinition("smibo.task_factory.{$id}", $task),
                 isset($task['interval'])

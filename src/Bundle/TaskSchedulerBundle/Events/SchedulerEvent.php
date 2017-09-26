@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Smibo\TaskSchedulerBundle\Events;
+namespace Smibo\Bundle\TaskSchedulerBundle\Events;
 
 use Symfony\Component\EventDispatcher\Event;
 

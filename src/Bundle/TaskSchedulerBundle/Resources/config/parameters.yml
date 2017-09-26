@@ -1,0 +1,4 @@
+parameters:
+    smibo_task_manager.class: Smibo\Bundle\TaskSchedulerBundle\TaskManager
+    smibo_task_scheduler.class: Smibo\Bundle\TaskSchedulerBundle\TaskScheduler
+    smibo_task_factory.class: Smibo\Bundle\TaskSchedulerBundle\TaskFactory

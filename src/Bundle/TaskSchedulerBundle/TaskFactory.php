@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Smibo\TaskSchedulerBundle;
+namespace Smibo\Bundle\TaskSchedulerBundle;
 
-use Smibo\TaskSchedulerBundle\Exceptions\TaskCreationException;
+use Smibo\Bundle\TaskSchedulerBundle\Exceptions\TaskCreationException;
 
 class TaskFactory
 {

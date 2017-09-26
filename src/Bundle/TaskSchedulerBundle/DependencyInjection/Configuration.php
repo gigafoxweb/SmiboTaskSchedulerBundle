@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Smibo\TaskSchedulerBundle\DependencyInjection;
+namespace Smibo\Bundle\TaskSchedulerBundle\DependencyInjection;
 
-use Smibo\TaskSchedulerBundle\SmiboTaskSchedulerBundle;
+use Smibo\Bundle\TaskSchedulerBundle\SmiboTaskSchedulerBundle;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
