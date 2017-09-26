@@ -10,8 +10,9 @@ use Smibo\Bundle\TaskSchedulerBundle\Events\AfterTaskSchedulerRunEvent;
 use Smibo\Bundle\TaskSchedulerBundle\Events\BeforeTaskSchedulerHandleTaskEvent;
 use Smibo\Bundle\TaskSchedulerBundle\Events\BeforeTaskSchedulerRunEvent;
 use Smibo\Bundle\TaskSchedulerBundle\Events\SchedulerEvent;
+use Smibo\Bundle\TaskSchedulerBundle\Events\TaskSchedulerExceptionEvent;
+use Smibo\Bundle\TaskSchedulerBundle\Exceptions\TaskSchedulerException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use function var_dump;
 
 class TaskScheduler
 {
@@ -42,28 +43,40 @@ class TaskScheduler
     }
 
     /**
-     *
+     * @throws TaskSchedulerException
      */
     public function run(): void
     {
-        $this->dispatchEvent(BeforeTaskSchedulerRunEvent::NAME, new BeforeTaskSchedulerRunEvent($this));
-        foreach ($this->taskManager->getTasks() as $id => $task) {
-            if ($task instanceof TaskSchedulerContainer) {
-                $now = new DateTime();
-                if (
-                    $this->storage->getTaskLastRunTime($id)->add($task->getInterval()) < $now &&
-                    $this->taskManager->checkTask($id)
-                ) {
-                    $this->runTask($id, $task);
-                    $this->storage->saveTaskLastRunTime($id, $now);
-                }
-            } else {
-                if ($this->taskManager->checkTask($id)) {
-                    $this->runTask($id, $task);
+        try {
+            $this->dispatchEvent(BeforeTaskSchedulerRunEvent::NAME, new BeforeTaskSchedulerRunEvent($this));
+            foreach ($this->taskManager->getTasks() as $id => $task) {
+                if ($task instanceof TaskSchedulerContainer) {
+                    $now = new DateTime();
+                    if (
+                        $this->storage->getTaskLastRunTime($id)->add($task->getInterval()) < $now &&
+                        $this->taskManager->checkTask($id)
+                    ) {
+                        $this->runTask($id, $task);
+                        $this->storage->saveTaskLastRunTime($id, $now);
+                    }
+                } else {
+                    if ($this->taskManager->checkTask($id)) {
+                        $this->runTask($id, $task);
+                    }
                 }
             }
+            $this->dispatchEvent(AfterTaskSchedulerRunEvent::NAME, new AfterTaskSchedulerRunEvent($this));
+        } catch (TaskSchedulerException $exception) {
+            if (!$this->getEventDispatcher() ||
+                !$this->getEventDispatcher()->hasListeners(TaskSchedulerExceptionEvent::NAME)
+            ) {
+                throw $exception;
+            }
+            $this->getEventDispatcher()->dispatch(
+                TaskSchedulerExceptionEvent::NAME,
+                new TaskSchedulerExceptionEvent($exception)
+            );
         }
-        $this->dispatchEvent(AfterTaskSchedulerRunEvent::NAME, new AfterTaskSchedulerRunEvent($this));
     }
 
     /**
