@@ -47,25 +47,18 @@ class TaskScheduler
      */
     public function run(): void
     {
+        $this->dispatchEvent(BeforeTaskSchedulerRunEvent::NAME, new BeforeTaskSchedulerRunEvent($this));
         try {
-            $this->dispatchEvent(BeforeTaskSchedulerRunEvent::NAME, new BeforeTaskSchedulerRunEvent($this));
             foreach ($this->taskManager->getTasks() as $id => $task) {
                 if ($task instanceof TaskSchedulerContainer) {
                     $now = new DateTime();
-                    if (
-                        $this->storage->getTaskLastRunTime($id)->add($task->getInterval()) < $now &&
-                        $this->taskManager->checkTask($id)
-                    ) {
-                        $this->runTask($id, $task);
-                        $this->storage->saveTaskLastRunTime($id, $now);
+                    if ($this->storage->getTaskLastRunTime($id)->add($task->getInterval()) > $now) {
+                        continue;
                     }
-                } else {
-                    if ($this->taskManager->checkTask($id)) {
-                        $this->runTask($id, $task);
-                    }
+                    $this->storage->saveTaskLastRunTime($id, $now);
                 }
+                $this->runTask($id, $task);
             }
-            $this->dispatchEvent(AfterTaskSchedulerRunEvent::NAME, new AfterTaskSchedulerRunEvent($this));
         } catch (TaskSchedulerException $exception) {
             if (!$this->getEventDispatcher() ||
                 !$this->getEventDispatcher()->hasListeners(TaskSchedulerExceptionEvent::NAME)
@@ -77,17 +70,26 @@ class TaskScheduler
                 new TaskSchedulerExceptionEvent($exception)
             );
         }
+        $this->dispatchEvent(AfterTaskSchedulerRunEvent::NAME, new AfterTaskSchedulerRunEvent($this));
     }
 
     /**
      * @param string $id
      * @param TaskContainer $task
      */
-    protected function runTask(string $id, TaskContainer $task)
+    public function runTask(string $id, TaskContainer $task): void
     {
-        $this->dispatchEvent(BeforeTaskSchedulerHandleTaskEvent::NAME, new BeforeTaskSchedulerHandleTaskEvent($id, $task->getTask()));
-        $this->taskManager->runTask($id);
-        $this->dispatchEvent(AfterTaskSchedulerHandleTaskEvent::NAME, new AfterTaskSchedulerHandleTaskEvent($id, $task->getTask()));
+        if ($this->taskManager->checkTask($id)) {
+            $this->dispatchEvent(
+                BeforeTaskSchedulerHandleTaskEvent::NAME,
+                new BeforeTaskSchedulerHandleTaskEvent($id, $task->getTask())
+            );
+            $this->taskManager->runTask($id);
+            $this->dispatchEvent(
+                AfterTaskSchedulerHandleTaskEvent::NAME,
+                new AfterTaskSchedulerHandleTaskEvent($id, $task->getTask())
+            );
+        }
     }
 
     /**
