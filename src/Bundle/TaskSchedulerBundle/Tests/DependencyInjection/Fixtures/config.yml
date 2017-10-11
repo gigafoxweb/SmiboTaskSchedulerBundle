@@ -1,0 +1,20 @@
+services:
+    task_storage:
+        class: SomeTaskStorageClass
+    default_task_handler:
+        class: SomeDefaultHandlerClass
+    default_task_checker:
+        class: SomeDefaultCheckerClass
+smibo_task_scheduler:
+    storage: task_storage
+    default_interval: PT15M
+    default_handler: default_task_handler
+    default_checker: default_task_checker
+    tasks:
+        testTask:
+            class: SomeTestTask
+        testTaskWithArguments:
+            class: SomeTestTaskWithArguments
+            arguments:
+                - asd
+                - 123

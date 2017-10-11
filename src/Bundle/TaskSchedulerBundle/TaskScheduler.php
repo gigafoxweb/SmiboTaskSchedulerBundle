@@ -44,6 +44,7 @@ class TaskScheduler
 
     /**
      * @throws TaskSchedulerException
+     * @return void
      */
     public function run(): void
     {
@@ -76,6 +77,7 @@ class TaskScheduler
     /**
      * @param string $id
      * @param TaskContainer $task
+     * @return void
      */
     public function runTask(string $id, TaskContainer $task): void
     {

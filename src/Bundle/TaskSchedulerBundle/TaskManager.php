@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Smibo\Bundle\TaskSchedulerBundle;
 
-use Smibo\Bundle\TaskSchedulerBundle\Exceptions\TaskSchedulerException;
+use Smibo\Bundle\TaskSchedulerBundle\Exceptions\TaskManagerException;
 
 class TaskManager
 {
@@ -15,36 +15,37 @@ class TaskManager
     /**
      * @param string $id
      * @return bool
-     * @throws TaskSchedulerException
+     * @throws TaskManagerException
      */
     public function checkTask(string $id): bool
     {
-        if (!isset($this->tasks[$id])) {
-            throw new TaskSchedulerException("Task {$id} does not exist.");
+        if (!$this->getTask($id)) {
+            throw new TaskManagerException("Task {$id} does not exist.");
         }
         return (
-            $this->tasks[$id]->getChecker() === null ||
-            $this->tasks[$id]->getChecker()->check($this->tasks[$id]->getTask())
+            $this->getTask($id)->getChecker() === null ||
+            $this->getTask($id)->getChecker()->check($this->getTasks()[$id]->getTask())
         );
     }
 
     /**
      * @param $id
-     * @throws TaskSchedulerException
+     * @return void
+     * @throws TaskManagerException
      */
     public function runTask(string $id): void
     {
-        if (!isset($this->tasks[$id])) {
-            throw new TaskSchedulerException("Task {$id} does not exist.");
+        if (!$this->getTask($id)) {
+            throw new TaskManagerException("Task {$id} does not exist.");
         }
-        $this->tasks[$id]->getHandler()->handle($this->tasks[$id]->getTask());
+        $this->getTask($id)->getHandler()->handle($this->getTask($id)->getTask());
     }
 
     /**
      * @param $id
      * @param TaskContainer $taskContainer
      */
-    public function setTask($id, TaskContainer $taskContainer): void
+    public function setTask(string $id, TaskContainer $taskContainer): void
     {
         $this->tasks[$id] = $taskContainer;
     }
@@ -55,7 +56,7 @@ class TaskManager
      */
     public function getTask(string $id): ?TaskContainer
     {
-        return isset($this->tasks[$id]) ? $this->tasks[$id] : null;
+        return !empty($this->tasks[$id]) ? $this->tasks[$id] : null;
     }
 
     /**

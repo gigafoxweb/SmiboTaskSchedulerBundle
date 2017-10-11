@@ -1,0 +1,5 @@
+imports:
+    - { resource: config.yml }
+
+smibo_task_scheduler:
+    default_handler: ''
