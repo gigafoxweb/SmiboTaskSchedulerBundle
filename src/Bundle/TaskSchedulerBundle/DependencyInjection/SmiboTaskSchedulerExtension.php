@@ -2,6 +2,7 @@
 namespace Smibo\Bundle\TaskSchedulerBundle\DependencyInjection;
 
 use DateInterval;
+use Smibo\Bundle\TaskSchedulerBundle\SmiboTaskSchedulerBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Definition;
@@ -43,12 +44,12 @@ class SmiboTaskSchedulerExtension extends Extension
      */
     protected function buildTaskScheduler()
     {
-        $this->container->setDefinition('smibo_task_scheduler',
+        $this->container->setDefinition(SmiboTaskSchedulerBundle::NAME,
             new Definition($this->container->getParameter('smibo_task_scheduler.class'), [
                 new Definition($this->container->getParameter('smibo_task_manager.class')),
                 new Reference($this->config['storage'])
             ])
-        );
+        )->setPublic(true);
     }
 
     protected function loadTasks()
