@@ -1,4 +1,5 @@
 <?php
+
 namespace Smibo\Bundle\TaskSchedulerBundle\Command;
 
 use Smibo\Bundle\TaskSchedulerBundle\SmiboTaskSchedulerBundle;
