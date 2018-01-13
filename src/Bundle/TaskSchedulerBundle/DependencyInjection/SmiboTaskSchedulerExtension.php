@@ -48,7 +48,7 @@ class SmiboTaskSchedulerExtension extends Extension
                 new Definition($this->container->getParameter('smibo_task_manager.class')),
                 new Reference($this->config['storage'])
             ])
-        );
+        )->setPublic(true);
     }
 
     protected function loadTasks()
