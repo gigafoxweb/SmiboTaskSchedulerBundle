@@ -1,0 +1,5 @@
+services:
+    smibo_task_scheduler.run_command:
+        class: Smibo\Bundle\TaskSchedulerBundle\Command\TaskSchedulerCommand
+        tags:
+            - { name: 'console.command', command: 'task-scheduler:run' }
