@@ -53,7 +53,7 @@ class TaskScheduler
             foreach ($this->taskManager->getTasks() as $id => $task) {
                 if ($task instanceof TaskSchedulerContainer) {
                     $now = new DateTime();
-                    if ($this->storage->getTaskLastRunTime($id)->add($task->getInterval()) > $now) {
+                    if ($this->storage->getTaskLastRunTime($id, $task->getInterval())->add($task->getInterval()) > $now) {
                         continue;
                     }
                     $this->storage->saveTaskLastRunTime($id, $now);

@@ -3,17 +3,21 @@ declare(strict_types=1);
 
 namespace Smibo\Bundle\TaskSchedulerBundle;
 
+use DateInterval;
+use DateTime;
+
 interface StorageInterface
 {
     /**
      * @param string $id
-     * @return \DateTime
+     * @param DateInterval $interval
+     * @return DateTime
      */
-    public function getTaskLastRunTime(string $id): \DateTime;
+    public function getTaskLastRunTime(string $id, DateInterval $interval): DateTime;
 
     /**
      * @param string $id
-     * @param \DateTime $time
+     * @param DateTime $time
      */
-    public function saveTaskLastRunTime(string $id, \DateTime $time): void;
+    public function saveTaskLastRunTime(string $id, DateTime $time): void;
 }
