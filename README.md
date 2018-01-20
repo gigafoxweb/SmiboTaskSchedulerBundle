@@ -50,7 +50,7 @@ smibo_task_scheduler:
                 to: anotherbody@mail.com
 ```
 ### Task
-Just simple custom [Value Object](https://en.wikipedia.org/wiki/Value_object) which does not implement any task scheduler interface. 
+Just simple custom [Value Object](https://en.wikipedia.org/wiki/Value_object) which implements TaskInterface. 
 
 #### Example
 ```php
@@ -111,13 +111,15 @@ class TaskDataStorage implements ContainerAwareInterface, StorageInterface
      * @return \DateTime
      * @throws \Exception
      */
-    public function getTaskLastRunTime(string $id): \DateTime
+    public function getTaskLastRunTime(string $id, \DateInterval $interval): \DateTime
     {
         $em = $this->container->get('doctrine')->getManager();
-        if (!$task = $em->getRepository(AppBundle\Entity\Task::class)->findBy($id)) {
-            throw new \Exception("Can`t find task {$id}");
+        if ($task = $em->getRepository(AppBundle\Entity\Task::class)->findBy($id)) {
+            
+            return $task->getLastRunDate();
         }
-        return $task->getLastRunDate();
+        
+        return (new DateTime())->sub($interval)->sub(new \DateInterval('PT1S'));
     }
 
     /**
