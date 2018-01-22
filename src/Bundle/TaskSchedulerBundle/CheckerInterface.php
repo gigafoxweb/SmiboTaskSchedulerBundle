@@ -6,8 +6,9 @@ namespace Smibo\Bundle\TaskSchedulerBundle;
 interface CheckerInterface
 {
     /**
+     * @param string $id
      * @param TaskInterface $task
      * @return bool
      */
-    function check(TaskInterface $task): bool;
+    function check(string $id, TaskInterface $task): bool;
 }

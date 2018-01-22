@@ -1,4 +1,5 @@
 <?php
+
 namespace Smibo\Bundle\TaskSchedulerBundle\Tests;
 
 
