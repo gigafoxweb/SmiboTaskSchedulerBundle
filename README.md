@@ -166,9 +166,10 @@ use Smibo\Bundle\TaskSchedulerBundle\TaskInterface;
 class DefaultTaskHandler implements HandlerInterface
 {
     /**
+     * @param string $id
      * @param TaskInterface $task
      */
-    function handle(TaskInterface $task): void
+    function handle(string $id, TaskInterface $task): void
     {
         var_dump($task);
     }
@@ -199,12 +200,12 @@ use Smibo\Bundle\TaskSchedulerBundle\TaskInterface;
 class DefaultTaskChecker implements CheckerInterface
 {
     /**
+     * @param string $id 
      * @param TaskInterface $task
      * @return bool
      */
-    function check(TaskInterface $task): bool
+    function check(string $id, TaskInterface $task): bool
     {
-        //because it is just example :)
         return (boolean) rand(0,1);
     }
 }
