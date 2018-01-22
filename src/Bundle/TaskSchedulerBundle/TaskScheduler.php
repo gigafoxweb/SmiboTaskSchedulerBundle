@@ -85,8 +85,8 @@ class TaskScheduler
                 BeforeTaskSchedulerHandleTaskEvent::NAME,
                 new BeforeTaskSchedulerHandleTaskEvent($id, $task->getTask())
             );
-            $this->taskManager->runTask($id);
             $this->storage->saveTaskLastRunTime($id, new DateTime());
+            $this->taskManager->runTask($id);
             $this->dispatchEvent(
                 AfterTaskSchedulerHandleTaskEvent::NAME,
                 new AfterTaskSchedulerHandleTaskEvent($id, $task->getTask())
