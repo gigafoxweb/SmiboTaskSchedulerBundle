@@ -1,5 +1,5 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
+
 
 namespace Smibo\Bundle\TaskSchedulerBundle;
 
@@ -56,7 +56,6 @@ class TaskScheduler
                     if ($this->storage->getTaskLastRunTime($id, $task->getInterval())->add($task->getInterval()) > $now) {
                         continue;
                     }
-                    $this->storage->saveTaskLastRunTime($id, $now);
                 }
                 $this->runTask($id, $task);
             }
@@ -87,6 +86,7 @@ class TaskScheduler
                 new BeforeTaskSchedulerHandleTaskEvent($id, $task->getTask())
             );
             $this->taskManager->runTask($id);
+            $this->storage->saveTaskLastRunTime($id, new DateTime());
             $this->dispatchEvent(
                 AfterTaskSchedulerHandleTaskEvent::NAME,
                 new AfterTaskSchedulerHandleTaskEvent($id, $task->getTask())
