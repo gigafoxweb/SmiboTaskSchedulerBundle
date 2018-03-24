@@ -2,6 +2,7 @@
 
 namespace Smibo\Bundle\TaskSchedulerBundle\Command;
 
+
 use Smibo\Bundle\TaskSchedulerBundle\SmiboTaskSchedulerBundle;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -9,9 +10,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class TaskSchedulerCommand extends ContainerAwareCommand
 {
-    /**
-     *
-     */
     public function configure()
     {
         $this->setName("task-scheduler:run")->setDescription('Runs task scheduler.');

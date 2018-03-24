@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
-
 namespace Smibo\Bundle\TaskSchedulerBundle;
+
 
 use DateInterval;
 use DateTime;
@@ -57,7 +57,7 @@ class TaskScheduler
                         continue;
                     }
                 }
-                $this->runTask($id, $task);
+                $this->runTask($id);
             }
         } catch (TaskSchedulerException $exception) {
             if (!$this->getEventDispatcher() ||
@@ -75,21 +75,20 @@ class TaskScheduler
 
     /**
      * @param string $id
-     * @param TaskContainer $task
-     * @return void
+     * @throws Exceptions\TaskManagerException
      */
-    public function runTask(string $id, TaskContainer $task): void
+    public function runTask(string $id): void
     {
         if ($this->taskManager->checkTask($id)) {
             $this->dispatchEvent(
                 BeforeTaskSchedulerHandleTaskEvent::NAME,
-                new BeforeTaskSchedulerHandleTaskEvent($id, $task->getTask())
+                new BeforeTaskSchedulerHandleTaskEvent($id, $this->taskManager->getTask($id)->getTask())
             );
             $this->storage->saveTaskLastRunTime($id, new DateTime());
             $this->taskManager->runTask($id);
             $this->dispatchEvent(
                 AfterTaskSchedulerHandleTaskEvent::NAME,
-                new AfterTaskSchedulerHandleTaskEvent($id, $task->getTask())
+                new AfterTaskSchedulerHandleTaskEvent($id, $this->taskManager->getTask($id)->getTask())
             );
         }
     }
