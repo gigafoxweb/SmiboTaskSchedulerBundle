@@ -32,7 +32,8 @@ class TaskManager
      */
     public function runTask(string $id): void
     {
-        $this->getTask($id)->getHandler()->handle($id, $this->getTask($id)->getTask());
+        $task = $this->getTask($id);
+        $task->getHandler()->handle($id, $task->getTask());
     }
 
     /**
